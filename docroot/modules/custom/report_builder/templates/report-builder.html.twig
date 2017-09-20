@@ -1,6 +1,6 @@
 <!-- Add you custom twig html here -->
 {{ breakpoint }}
-<form action="/report_builder/submit" method="post">
+<form action="/report_builder/submit" method="post" class="report-form">
   {% for kids in form %}
     <div class="individual-form">
       <h3>{{ kids.name }}</h3>
