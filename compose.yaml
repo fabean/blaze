@@ -1,0 +1,58 @@
+version: '2'
+services:
+  blaze-mysql:
+    container_name: blaze-mysql
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+    volumes:
+      - ../sites-databases/blaze:/var/lib/mysql
+    networks:
+      - dockercompose
+    command: mysqld --max_allowed_packet=64M
+    restart: always
+  blaze:
+    container_name: blaze
+    image: codekoalas/drupal8
+    environment:
+      VIRTUAL_HOST: .blaze.dev
+      #GIT_HOSTS: "IP url" it was hard coded to our internal gitlab removed for safety
+      GIT_REPO: https://github.com/fabean/blaze.git
+      GIT_BRANCH: 8.x
+      MYSQL_SERVER: mysql
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+      DRUPAL_BASE_URL: http://blaze.dev
+      DRUPAL_TRUSTED_HOSTS: blaze\.dev$$
+      DRUPAL_HTTPS: "off"
+      APACHE_DOCROOT: /var/www/site/docroot
+      PRODUCTION: "false"
+      #SESMailHub: mail-relay.ckdev.io
+      LOCAL: "true"
+    volumes:
+      - ../sites-files/blaze:/mnt/site-files
+      - ./:/var/www/site
+      #- blaze-files-sync:/mnt/sites-files
+      #- blaze-sync:/var/www/site
+    networks:
+      - dockercompose
+    links:
+      - blaze-mysql:mysql
+    extra_hosts:
+      - "xdebug:192.168.237.237"
+    restart: always
+networks:
+  dockercompose:
+    external:
+      name: dockercompose_dockercompose
+#volumes:
+#  blaze-sync:
+#    external: true
+#  blaze-files-sync:
+#    external: true
+#  blaze-mysql-sync:
+#    external: true

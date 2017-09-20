@@ -1,0 +1,16 @@
+
+report_builder.report_builder_controller_get:
+  path: '/report_builder'
+  defaults:
+    _controller: '\Drupal\report_builder\Controller\ReportBuilderController::get'
+    _title: 'Submit Blaze Kid Report'
+  requirements:
+    _permission: 'access content'
+
+report_builder.report_builder_controller_post:
+  path: '/report_builder/submit'
+  defaults:
+    _controller: '\Drupal\report_builder\Controller\ReportBuilderController::post'
+    _title: 'Post'
+  requirements:
+    _permission: 'access content'

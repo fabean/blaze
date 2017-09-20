@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Contains report_builder.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+/**
+ * Implements hook_help().
+ */
+function report_builder_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the report_builder module.
+    case 'help.page.report_builder':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Build the form that lets Leaders make reports for their kids') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function report_builder_theme($existing, $type, $theme, $path) {
+  return [
+    'report_builder' => [
+      'variables' => ['form' => null],
+      'template' => 'report-builder',
+    ],
+  ];
+}
+
+function report_builder_user_login($account) {
+  // We want to redirect user on login.
+  $response = new RedirectResponse("/report_builder");
+  $response->send();
+  return;
+}

@@ -1,0 +1,27 @@
+<!-- Add you custom twig html here -->
+{{ breakpoint }}
+<form action="/report_builder/submit" method="post">
+  {% for kids in form %}
+    <div class="individual-form">
+      <h3>{{ kids.name }}</h3>
+      <div class="form-inputs">
+        {% for field_name, values in kids.report %}
+          <label>
+            <input type="checkbox" class="{{ field_name }}" name="kids[{{ kids.id }}][{{ field_name }}]" {% if (values.value) %} checked="true" {% endif %}/>
+            {{ values.label }}
+          </label>
+        {% endfor %}
+        <div class="hidden-values">
+          <input type="hidden" name="kids[{{ kids.id }}][title]" value="{{ kids.title }}"/>
+          <input type="hidden" name="kids[{{ kids.id }}][id]" value="{{ kids.id }}"/>
+          <input type="hidden" name="kids[{{ kids.id }}][nid]" value="{{ kids.nid }}"/>
+          <input type="hidden" name="kids[{{ kids.id }}][date]" value="{{ kids.field_date }}"/>
+          <input type="hidden" name="kids[{{ kids.id }}][blaze_kid]" value="{{ kids.field_blaze_kid }}"/>
+        </div>
+      </div>
+    </div>
+
+  {% endfor %}
+
+  <button type="submit">Submit Report</button>
+</form>

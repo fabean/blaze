@@ -1,0 +1,5 @@
+name: Report Builder
+type: module
+description: Build the form that lets Leaders make reports for their kids
+core: 8.x
+package: Custom
