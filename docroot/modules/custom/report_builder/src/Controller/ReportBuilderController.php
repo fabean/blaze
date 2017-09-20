@@ -46,6 +46,7 @@ class ReportBuilderController extends ControllerBase {
    *   Return Hello string.
    */
   public function Get() {
+    \Drupal::service('page_cache_kill_switch')->trigger();
     // we will build a form on the site
     $form = [];
     $user_manager = \Drupal::entityTypeManager()->getStorage('user');
@@ -171,6 +172,7 @@ class ReportBuilderController extends ControllerBase {
    *   Return Hello string.
    */
   public function Post() {
+    \Drupal::service('page_cache_kill_switch')->trigger();
     $report_manager = \Drupal::entityTypeManager()->getStorage('node');
 
     $output_markup = \Drupal::request()->request;
