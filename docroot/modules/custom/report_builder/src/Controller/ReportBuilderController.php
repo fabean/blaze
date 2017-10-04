@@ -159,6 +159,11 @@ class ReportBuilderController extends ControllerBase {
       }
     }
 
+    // resort the form to put kids name in alpha order
+    usort($form, function($a, $b) {
+      return $a['name'] <=> $b['name'];
+    });
+
     return [
       '#theme' => 'report_builder',
       '#form' => $form
